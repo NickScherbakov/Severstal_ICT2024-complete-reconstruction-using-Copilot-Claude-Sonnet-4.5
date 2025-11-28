@@ -3,6 +3,7 @@ TITAN Analytics Platform - User Model with RBAC
 Enterprise-ready role-based access control system
 """
 
+import secrets
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
@@ -383,7 +384,6 @@ class User(AbstractUser):
     
     def generate_api_key(self) -> str:
         """Generate a new API key for the user"""
-        import secrets
         self.api_key = f"titan_{secrets.token_urlsafe(32)}"
         self.save(update_fields=['api_key'])
         return self.api_key

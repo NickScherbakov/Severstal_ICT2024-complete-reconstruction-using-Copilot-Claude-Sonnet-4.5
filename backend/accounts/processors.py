@@ -138,14 +138,15 @@ class LLMIntegration:
         """
         try:
             from django.conf import settings
-            import openai
+            from openai import OpenAI
             
-            openai.api_key = getattr(settings, 'OPENAI_API_KEY', '')
-            if not openai.api_key:
+            api_key = getattr(settings, 'OPENAI_API_KEY', '')
+            if not api_key:
                 logger.warning("OpenAI API key not configured, falling back to YandexGPT")
                 return LLMIntegration._call_yandex_gpt(prompt, 'yandexgpt', params)
             
-            response = openai.ChatCompletion.create(
+            client = OpenAI(api_key=api_key)
+            response = client.chat.completions.create(
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=params.get('temperature', 0.7),

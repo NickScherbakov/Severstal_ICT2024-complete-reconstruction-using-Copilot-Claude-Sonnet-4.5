@@ -19,8 +19,10 @@ spec:
     spec:
       containers:
         - name: backend
-          image: titan-analytics/backend:latest
-          imagePullPolicy: Always
+          # Use specific version tags in production for better reproducibility
+          # Update this to the actual version during deployment
+          image: titan-analytics/backend:v2.0.0
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
               name: http
@@ -99,7 +101,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: titan-analytics/backend:latest
+          image: titan-analytics/backend:v2.0.0
           command: ["celery", "-A", "analyst.celery", "worker", "-l", "info"]
           envFrom:
             - configMapRef:
@@ -135,7 +137,7 @@ spec:
     spec:
       containers:
         - name: beat
-          image: titan-analytics/backend:latest
+          image: titan-analytics/backend:v2.0.0
           command: ["celery", "-A", "analyst.celery", "beat", "-l", "info"]
           envFrom:
             - configMapRef:
@@ -171,7 +173,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: titan-analytics/frontend:latest
+          image: titan-analytics/frontend:v2.0.0
           ports:
             - containerPort: 80
               name: http

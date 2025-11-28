@@ -134,7 +134,7 @@ export function TemplateBuilder({
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   // Generate unique ID
-  const generateId = () => `block_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  const generateId = () => `block_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
 
   // Add a new block
   const addBlock = useCallback((blockType: BlockType) => {

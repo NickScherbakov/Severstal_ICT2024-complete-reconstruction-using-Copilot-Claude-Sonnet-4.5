@@ -155,8 +155,17 @@ class LicenseValidator:
         """
         Generate a license key
         
-        Note: In production, this would use proper cryptographic signing
-        with a private key stored securely.
+        SECURITY NOTE: This implementation uses a simple hash-based approach
+        for demonstration purposes only. For production deployments, implement:
+        
+        1. Asymmetric cryptographic signing (RSA/ECDSA) with private key
+        2. Include expiration date in the signed payload
+        3. Add hardware fingerprinting for node-locked licenses
+        4. Implement license server validation for online verification
+        5. Use secure storage for private keys (HSM, KMS, or Vault)
+        
+        Consider using established licensing libraries or services for
+        enterprise-grade license management.
         """
         data = f"{tier.value}:{organization}:{expiry_date or 'perpetual'}"
         hash_value = hashlib.sha256(data.encode()).hexdigest()[:16].upper()
