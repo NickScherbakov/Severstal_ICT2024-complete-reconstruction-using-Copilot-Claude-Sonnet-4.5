@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: titan
+  labels:
+    app.kubernetes.io/name: titan-analytics
+    app.kubernetes.io/managed-by: kubectl
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: titan-config
+  namespace: titan
+  labels:
+    app.kubernetes.io/name: titan-analytics
+data:
+  DJANGO_DEBUG: "false"
+  DJANGO_SETTINGS_MODULE: "analyst.settings"
+  ALLOWED_HOSTS: "*"
+  CORS_ALLOWED_ORIGINS: "https://titan.example.com"
+  DATABASE_HOST: "titan-postgresql"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "titan"
+  RABBITMQ_HOST: "titan-rabbitmq"
+  RABBITMQ_PORT: "5672"
+  CELERY_BROKER_URL: "amqp://guest:guest@titan-rabbitmq:5672//"
+  LOG_LEVEL: "INFO"
+  # Multi-LLM Configuration
+  DEFAULT_LLM_PROVIDER: "yandexgpt"
+  OPENAI_MODEL: "gpt-4"
+  ANTHROPIC_MODEL: "claude-3-sonnet-20240229"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: titan-secrets
+  namespace: titan
+  labels:
+    app.kubernetes.io/name: titan-analytics
+type: Opaque
+stringData:
+  # Replace with actual values before deployment
+  SECRET_KEY: "your-django-secret-key-here"
+  DATABASE_USER: "titan"
+  DATABASE_PASSWORD: "change-me-in-production"
+  YANDEX_SEARCH_API_TOKEN: "your-yandex-api-token"
+  OPENAI_API_KEY: ""
+  ANTHROPIC_API_KEY: ""
+  POSTGRES_PASSWORD: "change-me-in-production"
+  RABBITMQ_DEFAULT_USER: "guest"
+  RABBITMQ_DEFAULT_PASS: "guest"

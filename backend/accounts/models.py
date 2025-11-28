@@ -142,6 +142,12 @@ class MetaBlock(models.Model):
     COMPARISON = 'comparison'
     SENTIMENT = 'sentiment'
     FORECAST = 'forecast'
+    # New enterprise processors
+    ANOMALY = 'anomaly'
+    RECOMMENDATION = 'recommendation'
+    TREND = 'trend'
+    CLUSTERING = 'clustering'
+    SUMMARY = 'summary'
     
     TYPES = (
         (PLOTLY, 'Plotly'),
@@ -154,6 +160,11 @@ class MetaBlock(models.Model):
         (COMPARISON, 'Сравнение'),
         (SENTIMENT, 'Анализ тональности'),
         (FORECAST, 'Прогноз'),
+        (ANOMALY, 'Обнаружение аномалий'),
+        (RECOMMENDATION, 'Рекомендации'),
+        (TREND, 'Анализ трендов'),
+        (CLUSTERING, 'Кластеризация'),
+        (SUMMARY, 'Суммаризация'),
     )
 
     query_template = models.CharField(
